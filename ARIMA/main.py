@@ -26,7 +26,6 @@ def arima(series, n_pred):
     predictions = [[], []]
 
     differenced_series, num_diff = differencing.difference(series) # Differencing
-    print(num_diff)
     for i in range(len(differenced_series) - n_pred):
         training_points = differenced_series[i : i+n_pred] #Subset of differences series
         LM = linregress(x=np.arange(i, i+n_pred), y=training_points) # Regression

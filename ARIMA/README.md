@@ -6,6 +6,6 @@ Basically, for a rolling window, the pipeline
 - performs a linear regression on the differenced data to extend, and
 - dedifferences the data to make the predictions.
 
-This performs remarkably well, although simple linear-regressions over sliding windows will also perform just as well.
+This performs remarkably well, although even simple linear-regressions over sliding windows perform even better.
 ![Accuracy of predictions](./figures/toy-arima-predictions.png)
 However, this is a good starting point to figure out what actually happens behind the curtains in things like ARIMA.
