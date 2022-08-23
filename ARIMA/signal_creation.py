@@ -21,5 +21,13 @@ def generate_signal(tmin, tmax, tstep, coeff, var):
 	y = poly_time_series(np.poly1d(coeff), x, var)
 	return(x, y)
 
-def _combination_of_waves(x):
-    a, b, c = random.random(), random.random(), random.random()
+def combination_of_waves(x,n_waves, A, T, phi):
+    assert A.shape == (n_waves,)
+    assert T.shape == (n_waves,)
+    assert phi.shape == (n_waves,)
+    
+    y = np.zeros(x.shape)
+    for i in range(n_waves):
+        y += A[i]*np.sin(2*np.pi*x/T[i] + phi[i])
+        
+    return y
