@@ -7,5 +7,5 @@ Basically, for a rolling window, the pipeline
 - dedifferences the data to make the predictions.
 
 This performs remarkably well, although simple linear-regressions over sliding windows will also perform just as well.
-![Accuracy of predictions][./figures/toy-arima-predictions.png]
+![Accuracy of predictions](./figures/toy-arima-predictions.png)
 However, this is a good starting point to figure out what actually happens behind the curtains in things like ARIMA.
