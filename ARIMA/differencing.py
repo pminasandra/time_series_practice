@@ -6,7 +6,7 @@ from matplotlib import pyplot as plt
 import numpy as np
 from scipy.stats import linregress
 
-def difference(series, max_iter=10, slope_threshold=0.1,):
+def difference(series, max_iter=10, slope_threshold=0.3):
     """
     Progressively differences the array until the slope is close to 0.
     Args:
@@ -20,11 +20,11 @@ def difference(series, max_iter=10, slope_threshold=0.1,):
 
     LM = linregress(x=np.arange(0, len(series)), y=series)
     num_diff = 0
-    while abs(LM.slope) > threshold:
+    while abs(LM.slope) > slope_threshold:
         series = np.diff(series)
         LM = linregress(x=np.arange(0, len(series)), y=series)
         num_diff += 1
-        if num_diff > max_iter and abs(LM.slope) > threshold:
+        if num_diff > max_iter and abs(LM.slope) > slope_threshold:
             raise ValueError("max_iter reached but differencing not successful.")
 
     return series, num_diff
@@ -36,7 +36,7 @@ def dedifference(series, num_diff):
         series (array-like): differenced time-series.
         num_diff (int): number of times to dedifference.
     """
-    for i in range(num_diff)
+    for i in range(num_diff):
         series = series.cumsum()
 
     return series
