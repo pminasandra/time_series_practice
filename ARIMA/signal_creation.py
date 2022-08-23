@@ -30,4 +30,4 @@ def combination_of_waves(x,n_waves, A, T, phi):
     for i in range(n_waves):
         y += A[i]*np.sin(2*np.pi*x/T[i] + phi[i])
         
-    return y
+    return x, y

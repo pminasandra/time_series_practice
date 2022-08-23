@@ -6,10 +6,13 @@ import random
 
 from matplotlib import pyplot as plt
 import numpy as np
+import pandas as pd
 from scipy.stats import linregress
 
 import differencing
 import signal_creation
+
+SCATTER_SIZE = 10
 
 def arima(series, n_pred):
     """
@@ -38,29 +41,26 @@ def arima(series, n_pred):
 def main():
 
     x1 = signal_creation.generate_signal(0, 500, 1, [0.1, 1], 0.1)
-        return a*np.sin(0.02513272*0.5*x) + b*np.cos(0.02513272*0.7*x + c) + c*np.sin(0.02513272*0.3*x + b)
-    x2 = signal_creation.generate_signal2(0, 5000, 1, _sin_with_freq, 1)
-    x3 = signal_creation.generate_signal(0, 500, 1, [-1, 1, 1], 1)
+    x2 = signal_creation.combination_of_waves(np.arange(0,4000), 4, np.array([1,1,7,0.4]), np.array([500, 200, 1000, 40]), np.array([-0.78, 0.1, 0.3, 1.57]))
+    x3 = pd.read_csv('jena_climate_2009_2016.csv', sep=',', header=0)['T (degC)'].to_numpy()[:10000]
 
-    x1_preds = arima(x1[1], 5)
-    print(x1[1].shape)
+    x1_preds = arima(x1[1], 10)
+    x2_preds = arima(x2[1], 10)
+    x3_preds = arima(x3, 10)
 
-    x2_preds = arima(x2[1], 5)
-    
-#    x3_preds = arima(x3[1], 25)
-
-    fig, axs = plt.subplots(3,1)
-    axs[0].scatter(x1[0], x1[1])
-    axs[0].scatter(x1_preds[0], x1_preds[1], color="red", label="toy-ARIMA predictions", s=0.1)
+    fig, axs = plt.subplots(3,1, layout='tight')
+    axs[0].scatter(x1[0], x1[1], s=SCATTER_SIZE, label="Real data")
+    axs[0].plot(x1_preds[0], x1_preds[1], color="red", label="toy-ARIMA predictions")
     axs[0].legend()
+    axs[0].set_title('Linear growth with noise')
 
-    axs[1].scatter(x2[0], x2[1])
-    axs[1].scatter(x2_preds[0], x2_preds[1], color="red", label="prediction", s=0.1)
-    axs[1].legend()
+    axs[1].scatter(x2[0], x2[1], s=SCATTER_SIZE)
+    axs[1].plot(x2_preds[0], x2_preds[1], color="red")
+    axs[1].set_title('Combination of random sine waves')
 
-#    axs[0].scatter(x1[0], x1[1])
-#    axs[0].plot(x1_preds[0], x1_preds[1], color="red", label="prediction")
-#    axs[0].legend()
+    axs[2].scatter(np.arange(0, len(x3)), x3, s=SCATTER_SIZE)
+    axs[2].plot(x3_preds[0], x3_preds[1], color="red")
+    axs[2].set_title('Jena Climate Data: Temperature in deg C')
 
 
     plt.show()
