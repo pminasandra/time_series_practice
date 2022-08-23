@@ -6,7 +6,7 @@ from matplotlib import pyplot as plt
 import numpy as np
 from scipy.stats import linregress
 
-def difference(series, max_iter=10, slope_threshold=0.3):
+def difference(series, max_iter=10, slope_threshold=0.05):
     """
     Progressively differences the array until the slope is close to 0.
     Args:

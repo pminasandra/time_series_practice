@@ -26,6 +26,7 @@ def arima(series, n_pred):
     predictions = [[], []]
 
     differenced_series, num_diff = differencing.difference(series) # Differencing
+    print(num_diff)
     for i in range(len(differenced_series) - n_pred):
         training_points = differenced_series[i : i+n_pred] #Subset of differences series
         LM = linregress(x=np.arange(i, i+n_pred), y=training_points) # Regression
@@ -33,7 +34,7 @@ def arima(series, n_pred):
         training_points = list(training_points)
         training_points.append(LM.slope*(i+n_pred+1) + LM.intercept)
 
-        training_points = differencing.dedifference(np.array(training_points), num_diff) # Dedifferencing
+        training_points = differencing.dedifference(np.append(differenced_series[:i],np.array(training_points)), num_diff) # Dedifferencing
         predictions[1].append(training_points[-1])
 
     return np.array(predictions)
@@ -61,8 +62,7 @@ def linear_regression(series, n_pred):
     return np.array(predictions)
 
 def main():
-
-    x1 = signal_creation.generate_signal(0, 500, 1, [0.1, 1], 0.1)
+    x1 = signal_creation.generate_signal(0, 500, 1, [0.1,-3,0.1,-1], 0.1)
     x2 = signal_creation.combination_of_waves(np.arange(0,4000), 4, np.array([1,1,7,0.4]), np.array([500, 200, 1000, 40]), np.array([-0.78, 0.1, 0.3, 1.57]))
     x3 = pd.read_csv('jena_climate_2009_2016.csv', sep=',', header=0)['T (degC)'].to_numpy()[:10000]
 
