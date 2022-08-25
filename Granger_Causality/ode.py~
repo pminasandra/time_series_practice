@@ -1,0 +1,21 @@
+# Pranav Minasandra
+# pminasandra.github.io
+# Aug 25, 2022
+
+import numpy as np
+from scipy.integrate import odeint
+
+y_init = [0.8, 1 - 0.2, 0.0]
+
+def dy_0(y):
+    return -0.05*y[0]*y[1] 
+
+def dy_1(y):
+    return 0.05*y[0]*y[1] - 0.1*y[1]
+
+def dy_2(y):
+    return 0.1*y[1]
+
+def dy(y, t):
+    del t
+    return [dy_0(y), dy_1(y), dy_2(y)]
