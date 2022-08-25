@@ -1,2 +1,4 @@
-# time_series_practice
-Practicing some basic time-series forecasting
+# Time Series Practice
+
+This is a git repo where @vivekhsridhar and I practice some basic time-series analyses techniques
+using simple minimalistic implementations of methods to figure out what they are and what they're good for.
