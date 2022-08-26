@@ -19,23 +19,17 @@ def ode_simulate(function, init, time=np.arange(0,100,0.1), noise=0.5):
     """
 
     vec_init = init
-    res = odeint(function, init, time)
+    res = odeint(function, vec_init, time)
     res += noise*np.random.randn(res.shape[0], res.shape[1])
-    return res
+    return res.T
 
-def lorenz_attractor(sigma=25, rho=10, beta=4):
+def lorenz_attractor(sigma=10.0, rho=28.0, beta=8.0/3.0):
 
-    def x_der(vector):
-        return sigma*(vector[1] - vector[0])
 
-    def y_der(vector):
-        return x*(rho -z) - y
-
-    def z_der(vector):
-        return x*y - beta*z
-
-    def ode(vector):
-        return (x_der(vector), y_der(vector), z_der(vector))
+    def ode(vector, t):
+        x, y, z = vector[0], vector[1], vector[2]
+        del t
+        return sigma*(y - x), x*(rho - z) - y, x*y - beta*z
 
     return ode
 
@@ -47,7 +41,8 @@ def lotka_volterra(alpha=0.66, beta=1.33, gamma=1, delta=1):
     def y_der(vector):
         return delta*vector[0]*vector[1] - gamma*vector[1]
 
-    def ode(vector):
-        return (x_der(vector), y_der(vector))
+    def ode(vector, t):
+        del t
+        return [x_der(vector), y_der(vector)]
 
     return ode
