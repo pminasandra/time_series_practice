@@ -33,7 +33,7 @@ def lorenz_attractor(sigma=10.0, rho=28.0, beta=8.0/3.0):
 
     return ode
 
-def lotka_volterra(alpha=0.66, beta=1.33, gamma=1, delta=1):
+def lotka_volterra(alpha=0.0785, beta=0.157, gamma=0.119, delta=0.119):
 
     def x_der(vector):
         return alpha*vector[0] - beta*vector[0]*vector[1]

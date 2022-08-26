@@ -11,24 +11,29 @@ import dynamics
 import embedding
 
 time = np.arange(0.0, 40.0, 0.01)
+half_time = int(np.max(time)/(2*(time[1]-time[0])))
 
 fig, axs = plt.subplots(3,1)
-results = dynamics.ode_simulate(dynamics.lorenz_attractor(), [1,1,1], time, noise=10)
+results = dynamics.ode_simulate(dynamics.lorenz_attractor(), [1,1,1], time, noise=0.1)
 
 predictions = []
 
-for i in range(2000, len(time)):
-    pred = embedding.predict(results[:,:i], 2, 5)
+for i in range(half_time, len(time)):
+    pred = embedding.predict(results[:,:i], 3, 5)
     predictions.append(pred)
 
 predictions = np.array(predictions).T
 
-axs[0].plot(results[0,:])
-axs[0].plot(range(2000,len(time)), predictions[0,:])
-axs[1].plot(results[1,:])
-axs[1].plot(range(2000,len(time)), predictions[1,:])
-axs[2].plot(results[2,:])
-axs[2].plot(range(2000,len(time)), predictions[2,:])
-
+axs[0].plot(range(half_time,len(time)),results[0,half_time:])
+axs[0].plot(range(half_time,len(time)), predictions[0,:])
+axs[1].plot(range(half_time,len(time)),results[1,half_time:])
+axs[1].plot(range(half_time,len(time)), predictions[1,:])
+axs[2].plot(range(half_time,len(time)),results[2,half_time:])
+axs[2].plot(range(half_time,len(time)), predictions[2,:])
 plt.show()
 
+fig = plt.figure()
+ax = fig.gca(projection="3d")
+ax.plot(results[0, half_time:], results[1, half_time:], results[2, half_time:])
+ax.plot(predictions[0, :], predictions[1, :], predictions[2, :])
+plt.show()

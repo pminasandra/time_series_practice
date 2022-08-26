@@ -29,6 +29,6 @@ def predict(time_series, embed_dimensions=2, num_nearest_neighbours=5):
         distances = distances.argsort()[:num_nearest_neighbours]
 
         for predicting_point in distances:
-            predictions.append(time_series[predicting_point + embed_point])
+            predictions.append(time_series[predicting_point + embed_point + 1])
 
     return np.array(predictions).mean(axis=0)
