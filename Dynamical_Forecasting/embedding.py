@@ -22,9 +22,8 @@ def predict(time_series, embed_dimensions=2, num_nearest_neighbours=5):
     time_series = time_series.T
     for embed_point in range(embed_dimensions):
         point_val = time_series[-(embed_point+1), :]
-        time_series = list(time_series)
-        distances = np.array([scipy.spatial.distance.euclidean(point, point_val) for point in time_series])[:-embed_dimensions]
-        time_series = np.array(time_series)
+        time_series2 = list(time_series)
+        distances = np.array([scipy.spatial.distance.euclidean(point, point_val) for point in time_series2])[:-embed_dimensions]
 
         distances = distances.argsort()[:num_nearest_neighbours]
 

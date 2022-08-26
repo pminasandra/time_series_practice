@@ -14,7 +14,7 @@ time = np.arange(0.0, 40.0, 0.01)
 half_time = int(np.max(time)/(2*(time[1]-time[0])))
 
 fig, axs = plt.subplots(3,1)
-results = dynamics.ode_simulate(dynamics.lorenz_attractor(), [1,1,1], time, noise=0.1)
+results = dynamics.ode_simulate(dynamics.lorenz_attractor(), [1,1,1], time, noise=5)
 
 predictions = []
 
